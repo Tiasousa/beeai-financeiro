@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BEEAI Financeiro</title>
+
+  <!--
+    ===========================================================================
+    COMO INSTALAR ESTE ARQUIVO
+    ===========================================================================
+    A URL do /exec do BEEAI Financeiro já está preenchida abaixo (link e iframe).
+    Falta só 1 passo: coloque nesta MESMA pasta o arquivo "icon.png" — pode ser
+    exatamente o mesmo arquivo de logo já usado no wrapper do hub geral
+    (Tecnometal BEE AI). Não precisa recriar nada, é o mesmo emblema da empresa.
+    ===========================================================================
+  -->
+
+  <!-- Ícone da tela inicial (arquivo icon.png na MESMA pasta) -->
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="shortcut icon" href="icon.png">
+
+  <!-- Manifesto PWA (usado principalmente pelo Android/Chrome ao "Instalar app") -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Nome do app + tela cheia + cor do tema -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BEEAI Financeiro">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="BEEAI Financeiro">
+  <meta name="theme-color" content="#0F1E33">
+
+  <style>
+    html, body { margin: 0; height: 100%; background: #0A1330; }
+    /* respeita a faixa de cima do iPhone (relógio/notch) em tela cheia */
+    #app {
+      position: fixed;
+      top: env(safe-area-inset-top, 0px);
+      left: 0; right: 0; bottom: 0;
+      width: 100%;
+      height: calc(100% - env(safe-area-inset-top, 0px));
+      border: 0;
+    }
+    #abrindo {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      background: radial-gradient(ellipse at 50% 38%, #123320 0%, #0a1f30 45%, #050a1c 100%);
+      color: #EAF1FB; font-family: 'Segoe UI', system-ui, sans-serif; z-index: 2;
+      transition: opacity .5s ease;
+    }
+    #abrindo img { width: 104px; height: auto; border-radius: 22px; filter: drop-shadow(0 0 16px rgba(34,197,94,.5)); }
+    #abrindo .marca { font-size: 26px; font-weight: 800; letter-spacing: 2px; }
+    #abrindo .marca .bee { color: #ffffff; }
+    #abrindo .marca .ai { color: #34D399; }
+    #abrindo .modulo { font-size: 13px; font-weight: 600; letter-spacing: 3px; color: #9aa4bd; margin-top: -8px; }
+    #abrindo .sub { font-size: 12px; letter-spacing: 3px; color: #34D399; }
+    #abrindo .anel { width: 40px; height: 40px; border: 3px solid rgba(34,197,94,.22); border-top-color: #22C55E; border-radius: 50%; animation: girar .9s linear infinite; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    #abrindo a { margin-top: 8px; color: #8fd6b0; font-size: 13px; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="abrindo">
+    <img src="icon.png" alt="BEEAI Financeiro" onerror="this.style.display='none'">
+    <div class="marca">TECNOMETAL <span class="bee">BEE</span><span class="ai">AI</span></div>
+    <div class="modulo">FINANCEIRO</div>
+    <div class="sub">PLANEJAMENTO · CONTROLE · RESULTADOS</div>
+    <div class="anel"></div>
+    <a href="https://script.google.com/macros/s/AKfycbzg-F3ArIvxfBlGVM8Eyupy7S251ogecj-b9jab3wMBxuH8YwOLBKzn1Fak032pubCUmg/exec" target="_blank">Não abriu? Toque aqui</a>
+  </div>
+
+  <iframe id="app" src="https://script.google.com/macros/s/AKfycbzg-F3ArIvxfBlGVM8Eyupy7S251ogecj-b9jab3wMBxuH8YwOLBKzn1Fak032pubCUmg/exec"
+    onload="document.getElementById('abrindo').style.opacity='0'; setTimeout(function(){document.getElementById('abrindo').style.display='none';}, 600);"></iframe>
+</body>
+</html>
