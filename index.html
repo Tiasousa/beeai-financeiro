@@ -3,7 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>BEEAI Financeiro Tecnometal</title>
+  <title>Gestão Financeira BEEAI Tecnometal</title>
+
+  <!--
+    ===========================================================================
+    COMO INSTALAR ESTE ARQUIVO
+    ===========================================================================
+    A URL do /exec do BEEAI Financeiro já está preenchida abaixo (link e iframe).
+    Falta só 1 passo: coloque nesta MESMA pasta o arquivo "icon.png" — pode ser
+    exatamente o mesmo arquivo de logo já usado no wrapper do hub geral
+    (Tecnometal BEE AI). Não precisa recriar nada, é o mesmo emblema da empresa.
+    ===========================================================================
+  -->
 
   <!-- Ícone da tela inicial (arquivo icon.png na MESMA pasta) -->
   <link rel="apple-touch-icon" href="icon.png">
@@ -18,13 +29,16 @@
   <!-- Nome do app + tela cheia + cor do tema -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="BEEAI Financeiro Tecnometal">
+  <meta name="apple-mobile-web-app-title" content="Gestão Financeira BEEAI Tecnometal">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="BEEAI Financeiro Tecnometal">
+  <meta name="application-name" content="Gestão Financeira BEEAI Tecnometal">
   <meta name="theme-color" content="#0F1E33">
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&display=swap');
+
     html, body { margin: 0; height: 100%; background: #0A1330; }
+    /* respeita a faixa de cima do iPhone (relógio/notch) em tela cheia */
     #app {
       position: fixed;
       top: env(safe-area-inset-top, 0px);
@@ -33,32 +47,115 @@
       height: calc(100% - env(safe-area-inset-top, 0px));
       border: 0;
     }
+
+    /* ==========================================================================
+       SPLASH — mesmo padrão visual da tela de abertura interna do app
+       (anel duplo girando + logo, wordmark com brilho, selo, tagline, barra)
+       ========================================================================== */
     #abrindo {
-      position: fixed; inset: 0; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 18px;
+      position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
       background: radial-gradient(ellipse at 50% 38%, #123320 0%, #0a1f30 45%, #050a1c 100%);
       color: #EAF1FB; font-family: 'Segoe UI', system-ui, sans-serif; z-index: 2;
       transition: opacity .5s ease;
     }
-    #abrindo img { width: 104px; height: auto; border-radius: 22px; filter: drop-shadow(0 0 16px rgba(34,197,94,.5)); }
-    #abrindo .marca { font-size: 26px; font-weight: 800; letter-spacing: 2px; }
-    #abrindo .marca .bee { color: #ffffff; }
-    #abrindo .marca .ai { color: #34D399; }
-    #abrindo .modulo { font-size: 13px; font-weight: 600; letter-spacing: 3px; color: #9aa4bd; margin-top: -8px; }
-    #abrindo .sub { font-size: 12px; letter-spacing: 3px; color: #34D399; }
-    #abrindo .anel { width: 40px; height: 40px; border: 3px solid rgba(34,197,94,.22); border-top-color: #22C55E; border-radius: 50%; animation: girar .9s linear infinite; }
-    @keyframes girar { to { transform: rotate(360deg); } }
-    #abrindo a { margin-top: 8px; color: #8fd6b0; font-size: 13px; text-decoration: underline; }
+
+    .abrindo__glow {
+      position: absolute; top: 40%; left: 50%; width: 480px; height: 480px; transform: translate(-50%,-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16,185,129,0.22) 0%, rgba(34,211,238,0.08) 42%, transparent 70%);
+      filter: blur(6px); z-index: 1;
+      animation: abrindoRespira 5s ease-in-out infinite;
+    }
+    @keyframes abrindoRespira { 0%,100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.07); } }
+
+    .abrindo__content { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; z-index: 2; }
+    .abrindo__content > * { opacity: 0; animation: abrindoSubir 0.7s ease forwards; }
+    .abrindo__content .abrindo__emblema { animation-delay: 0.05s; }
+    .abrindo__content .abrindo__marca { animation-delay: 0.22s; }
+    .abrindo__content .abrindo__modulo { animation-delay: 0.32s; }
+    .abrindo__content .abrindo__tagline { animation-delay: 0.44s; }
+    .abrindo__content .abrindo__barra { animation-delay: 0.58s; }
+    #abrindo > .abrindo__link { opacity: 0; animation: abrindoSubir 0.7s ease forwards; animation-delay: 0.68s; }
+    @keyframes abrindoSubir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ---- emblema: anel duplo girando (dentes + arco) + logo pulsando ---- */
+    .abrindo__emblema {
+      position: relative; width: 172px; height: 172px; margin-bottom: 26px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .abrindo__emblema-anel { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .abrindo__emblema-anel .gear { transform-box: fill-box; transform-origin: center; animation: abrindoGirar 12s linear infinite; }
+    .abrindo__emblema-anel .arco { transform-box: fill-box; transform-origin: center; animation: abrindoGirar 1.3s linear infinite; }
+    .abrindo__logo { position: relative; width: 98px; height: auto; border-radius: 22px; z-index: 2; animation: abrindoPulsaLogo 3.6s ease-in-out infinite; }
+    @keyframes abrindoPulsaLogo { 0%,100% { filter: drop-shadow(0 0 12px rgba(16,185,129,0.42)); } 50% { filter: drop-shadow(0 0 22px rgba(34,211,238,0.55)); } }
+    @keyframes abrindoGirar { to { transform: rotate(360deg); } }
+
+    /* ---- wordmark com brilho + prefixo "Gestão Financeira" acima ---- */
+    .abrindo__marca { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .abrindo__prefixo {
+      font-family: 'Saira Condensed', 'Segoe UI', sans-serif; font-weight: 600; font-size: 15px;
+      letter-spacing: 2.5px; text-transform: uppercase; color: #EAF1FB;
+    }
+    .abrindo__word {
+      font-family: 'Saira Condensed', 'Segoe UI', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: 2px; line-height: 1;
+      background: linear-gradient(100deg, #d1fae5 0%, #ffffff 18%, #a7f3d0 34%, #10B981 52%, #6ee7d7 68%, #22D3EE 82%, #d1fae5 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+      animation: abrindoShimmer 3.2s linear infinite;
+    }
+    @keyframes abrindoShimmer { to { background-position: -220% 0; } }
+    .abrindo__modulo {
+      margin-top: 6px; font-family: 'Saira Condensed', 'Segoe UI', sans-serif; font-size: 13px;
+      font-weight: 600; letter-spacing: 3px; color: #8FA2C4;
+    }
+    .abrindo__tagline { margin-top: 14px; font-family: 'Saira Condensed', 'Segoe UI', sans-serif; font-size: 13px; letter-spacing: 3.5px; color: #34D399; font-weight: 600; }
+
+    .abrindo__barra { margin-top: 30px; width: min(320px, 74vw); height: 4px; background: rgba(16,185,129,0.12); border-radius: 999px; overflow: hidden; }
+    .abrindo__barra-fill {
+      height: 100%; width: 32%; border-radius: 999px;
+      background: linear-gradient(90deg, transparent, #10B981 30%, #34D399 50%, #22D3EE 75%, transparent);
+      animation: abrindoDesliza 1.5s ease-in-out infinite;
+    }
+    @keyframes abrindoDesliza { 0% { transform: translateX(-130%); } 100% { transform: translateX(420%); } }
+
+    .abrindo__link { margin-top: 18px; color: #8fd6b0; font-size: 13px; text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .abrindo__word { font-size: 28px; } .abrindo__prefixo { font-size: 12px; letter-spacing: 1.8px; }
+      .abrindo__emblema { width: 130px; height: 130px; } .abrindo__logo { width: 74px; }
+      .abrindo__modulo { font-size: 11px; letter-spacing: 2px; }
+      .abrindo__tagline { letter-spacing: 2px; font-size: 11px; }
+    }
   </style>
 </head>
 <body>
   <div id="abrindo">
-    <img src="icon.png" alt="BEEAI Financeiro Tecnometal" onerror="this.style.display='none'">
-    <div class="marca"><span class="bee">BEE</span><span class="ai">AI</span> FINANCEIRO</div>
-    <div class="modulo">TECNOMETAL</div>
-    <div class="sub">PLANEJAMENTO · CONTROLE · RESULTADOS</div>
-    <div class="anel"></div>
-    <a href="https://script.google.com/macros/s/AKfycbzg-F3ArIvxfBlGVM8Eyupy7S251ogecj-b9jab3wMBxuH8YwOLBKzn1Fak032pubCUmg/exec" target="_blank">Não abriu? Toque aqui</a>
+    <div class="abrindo__glow"></div>
+    <div class="abrindo__content">
+      <div class="abrindo__emblema">
+        <svg class="abrindo__emblema-anel" viewBox="0 0 172 172" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="wrapAnelGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#a7f3d0"/>
+              <stop offset="0.5" stop-color="#10B981"/>
+              <stop offset="1" stop-color="#065f46"/>
+            </linearGradient>
+          </defs>
+          <circle cx="86" cy="86" r="80" fill="none" stroke="rgba(16,185,129,0.16)" stroke-width="1.4"/>
+          <circle class="gear" cx="86" cy="86" r="80" fill="none" stroke="url(#wrapAnelGrad)" stroke-width="6" stroke-dasharray="3 9.5"/>
+          <circle class="arco" cx="86" cy="86" r="71" fill="none" stroke="#22D3EE" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="52 280"/>
+        </svg>
+        <img class="abrindo__logo" src="icon.png" alt="Gestão Financeira BEEAI Tecnometal" onerror="this.style.display='none'">
+      </div>
+      <div class="abrindo__marca">
+        <span class="abrindo__prefixo">Gestão Financeira</span>
+        <span class="abrindo__word">BEEAI</span>
+      </div>
+      <div class="abrindo__modulo">TECNOMETAL</div>
+      <div class="abrindo__tagline">PLANEJAMENTO · CONTROLE · RESULTADOS</div>
+      <div class="abrindo__barra"><div class="abrindo__barra-fill"></div></div>
+    </div>
+    <a class="abrindo__link" href="https://script.google.com/macros/s/AKfycbzg-F3ArIvxfBlGVM8Eyupy7S251ogecj-b9jab3wMBxuH8YwOLBKzn1Fak032pubCUmg/exec" target="_blank">Não abriu? Toque aqui</a>
   </div>
 
   <iframe id="app" src="https://script.google.com/macros/s/AKfycbzg-F3ArIvxfBlGVM8Eyupy7S251ogecj-b9jab3wMBxuH8YwOLBKzn1Fak032pubCUmg/exec"
